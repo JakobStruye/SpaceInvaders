@@ -52,6 +52,10 @@ set(SRC
 set(CMAKE_CXX_FLAGS "-pedantic -Wall -Wextra -std=c++11")
 
 
+# Set the CMake Modules library module path
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
+
 # Detect and add SFML
 find_package(SFML 2 REQUIRED COMPONENTS graphics window system)
 include_directories(${SFML_INCLUDE_DIR})
