@@ -1,0 +1,58 @@
+SpaceInvaders
+=============
+
+
+By Jakob Struye
+Created for Gevorderd Programmeren, 2Ba Informatica UA
+
+
+Building the project
+--------------------
+
+$ mkdir build
+$ cd build
+cmake ..
+make
+
+Note that the project requires the SFML library to build! (v2.x)
+
+
+
+Documentation on design of project
+----------------------------------
+
+See Report.pdf in /docs (in Dutch).
+
+
+
+Gameplay
+--------
+
+You control the ship at the bottom of the screen. You can move left and right and shoot. 
+Try to shoot all the Alien Ships above you before they reach your shields (or you, if the shields are destroyed).
+Destroying Alien Ships gets you 10 to 40 points a piece!
+Occasionally a fast red Bonus Ship will appear at the top of the screen. Try to shoot it for an additional 100 points!
+If you manage to destroy all Alien Ships, a new level will start, where the Aliens move and shoot faster.
+Good luck!
+
+
+
+Controls
+--------
+
+Moving the Player Ship: left and right arrow keys
+Shooting: space bar
+Pausing the game: Escape
+Unpausing the game: Enter
+Starting a new game after a game over: Enter
+Closing the game after a game over: Escape
+
+
+
+Advanced features
+-----------------
+
+Advanced users can change variables to change the flow of the game. 
+Scroll to the bottom of the /src/Model/spaceInvadersModel.h file and tweak the indicated variables.
+Don't forget to recompile!
+Be careful if you don't know what you're doing, you might make the game unplayable (or more fun?)...
