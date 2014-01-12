@@ -2,7 +2,7 @@
  * SpaceInvadersView.h
  *
  *  Created on: 7-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef SPACEINVADERSVIEW_H_
@@ -13,10 +13,6 @@
 #include "../Model/spaceInvadersModel.h"
 #include "textures.h"
 #include "../Other/observer.h"
-
-//#define DATADIR "/home/jakob/Dropbox/UA/workspace/SpaceInvaders/data/"
-//#define DATADIR "C:/Users/Jakob/Dropbox/UA/workspace/SpaceInvaders/data/"
-//#define DATADIR ""
 
 
 namespace View {
@@ -37,11 +33,13 @@ namespace View {
 	     */
 		SpaceInvadersSFML(int xReso, int yReso, Model::SpaceInvadersModel* SI);
 
+
 		/**
 		 * @brief Generates the HUD for the current state of the game
 		 */
 
 		void generateHUD();
+
 
 		/**
 		 * @brief Draws the current state of the game
@@ -49,6 +47,7 @@ namespace View {
 		 * @return True if window still open
 		 */
 		bool draw();
+
 
 		/**
 		 * @brief Draws the current state of a game currently not in progress
@@ -65,35 +64,42 @@ namespace View {
 		 */
 		bool drawPaused();
 
+
 		/**
 		 * @brief Loads all textures
 		 */
 		void setTextures();
+
 
 		/**
 		 * @brief Sets the Sprite for the PlayerShip
 		 */
 		void setPlayer();
 
+
 		/**
 		 * @brief Sets the Sprites for the RegularAliens
 		 */
 		void setAliens();
+
 
 		/**
 		 * @brief Sets the Sprites for the Bullets
 		 */
 		void setBullets();
 
+
 		/**
 		 * @brief Sets the Sprites for the Shields
 		 */
 		void setShields();
 
+
 		/**
 		 * @brief Sets the Sprite for the BonusAlien
 		 */
 		void setBonus();
+
 
 		/**
 		 * @brief: Generates a square shape of the given Entity
@@ -103,10 +109,12 @@ namespace View {
 		 */
 		void generateShape(Model::Entity* entity);
 
+
 		/**
 		 * @brief Sets new Model pointer
 		 */
 		void setModel(Model::SpaceInvadersModel* SI);
+
 
 		/**
 		 * @brief Closes the window
@@ -119,7 +127,7 @@ namespace View {
 		 *
 		 * @return True if window is open
 		 */
-		bool isViewOpen();
+		bool isViewOpen() const;
 
 
 		/**

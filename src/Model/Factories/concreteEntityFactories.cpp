@@ -2,7 +2,7 @@
  * concreteEntityFactories.cpp
  *
  *  Created on: 17-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #include "concreteEntityFactories.h"

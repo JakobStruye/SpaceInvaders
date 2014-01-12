@@ -2,7 +2,7 @@
  * regularAlienTypes.h
  *
  *  Created on: 11-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef REGULARALIENTYPES_H_

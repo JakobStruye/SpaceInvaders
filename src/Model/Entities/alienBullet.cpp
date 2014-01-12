@@ -2,7 +2,7 @@
  * alienBullet.cpp
  *
  *  Created on: Dec 15, 2013
- *      Author: jakob
+ *      Author: Jakob Struye
  */
 
 

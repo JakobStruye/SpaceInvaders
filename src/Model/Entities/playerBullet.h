@@ -2,7 +2,7 @@
  * playerBullet.h
  *
  *  Created on: Dec 2, 2013
- *      Author: jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef PLAYERBULLET_H_
@@ -11,9 +11,7 @@
 #include "bullet.h"
 
 
-
 namespace Model {
-
 
 
     /**
@@ -26,7 +24,7 @@ namespace Model {
          *
          * @param xLoc Horizontal location of left side of PlayerBullet
          * @param yLoc Vertical location of top of PlayerBullet
-        * @param relativeSize size of the longest side
+         * @param relativeSize size of the longest side
          */
         PlayerBullet(int xLoc, int yLoc, int relativeSize) :
            Bullet(xLoc, yLoc, 0.2 * relativeSize, relativeSize, 1, U) {}

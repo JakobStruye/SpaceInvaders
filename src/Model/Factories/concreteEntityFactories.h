@@ -2,7 +2,7 @@
  * specificFactories.h
  *
  *  Created on: 17-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef SPECIFICFACTORIES_H_

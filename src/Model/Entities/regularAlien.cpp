@@ -2,7 +2,7 @@
  * regularAlien.cpp
  *
  *  Created on: 4-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #include "regularAlien.h"

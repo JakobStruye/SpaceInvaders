@@ -2,7 +2,7 @@
  * spaceInvadersModel.cpp
  *
  *  Created on: 13-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 
@@ -23,6 +23,7 @@ namespace Model {
 		generatePlayfield();
 	}
 
+
 	void SpaceInvadersModel::generateRegularAliens() {
 		Factory::EntityFactory * factory;
 
@@ -35,13 +36,15 @@ namespace Model {
 		int currentY = topMarginPercentage * ySize_;
 		int currentX = 0;
 		factory = new Factory::RegularAlienTopFactory;
-		//Todo: shorten
 		for (int j=0; j < alienColumns_; j++) {   //One row of RegularAlienTops
 			RegularAlien* newAlien = dynamic_cast<RegularAlien*>(factory->getEntity(currentX, currentY, xPerAlien));
 			aliens_.push_back(newAlien);
+			//Make sure next Alien is to the right of this one
 			currentX += xPerAlien + xBetweenAliens;
 		}
+		//Reset position horizontally
 		currentX = 0;
+		//Move position down
 		currentY += yPerAlien + yBetweenAliens;
 		delete factory;
 		factory = new Factory::RegularAlienMidFactory;
@@ -70,7 +73,7 @@ namespace Model {
 	}
 
 	void SpaceInvadersModel::generateShields() {
-		 //Determine how many pixels each Shield gets, depending on screen size
+		//Determine how many pixels each Shield gets, depending on screen size
 		int shieldX = 0.125 * xSize_;
 		int xPerShield = 0.1 * xSize_;
 		int xBetweenShields = 0.12 * xSize_;
@@ -98,6 +101,7 @@ namespace Model {
 		generateRegularAliens();
 		generateShields();
 		generatePlayer();
+		//BonusAlien spawns later
 		bonus_ = nullptr;
 
 		//currentLevel starts at 0 and this function is called every time a new level starts
@@ -128,6 +132,7 @@ namespace Model {
 
 
 	void SpaceInvadersModel::moveRegularAliens(Direction dir, int distance) {
+		//Move every RegularAlien
 		for (auto i : aliens_)
 			if (i)
 				i->move(dir, distance);
@@ -147,7 +152,7 @@ namespace Model {
 		std::vector<RegularAlien*>::iterator it = bottomAliens.begin();
 		while (it != bottomAliens.end()){
 			if (!(*it))  //if nullptr
-				it = bottomAliens.erase(it);
+				it = bottomAliens.erase(it); //then remove it
 			else
 				it++;
 		}
@@ -159,6 +164,7 @@ namespace Model {
 		shooter--;    //subtract one (because it should start at 0)
 		bullets_.push_back(bottomAliens[shooter]->shoot());  //Have the picked RegularAlien take a shot
 	}
+
 
     void SpaceInvadersModel::playerShoot() {
     	bullets_.push_back(player_->shoot());
@@ -191,6 +197,7 @@ namespace Model {
 		}
     }
 
+
     void SpaceInvadersModel::checkForDestroyedRegularAliens() {
 		bool alienCollided = false;   //True if a RegularAlien hit something other than a Bullet
 		std::vector<RegularAlien*>::iterator alienIt = aliens_.begin();
@@ -199,7 +206,7 @@ namespace Model {
 				if ((*alienIt)->collidedWithSomething())   //Check if it hit something other than a Bullet
 					alienCollided = true;
 				else
-					score_ += (*alienIt)->getScore();   //Add score
+					score_ += (*alienIt)->getScore();   //Add score if it collided with Bullet (== shot down by Player)
 				delete *alienIt;
 				//Just set to nullptr, don't remove from vector,
 				//the position in the vector is used to determine bottom RegularAliens in randomAlienShoot()
@@ -214,6 +221,7 @@ namespace Model {
 		if (!areAliensAlive()) //All RegularAliens destroyed -> Player wins this level
 		    levelOver(true);
     }
+
 
     void SpaceInvadersModel::checkForDestroyedBullets() {
 		std::vector<Bullet*>::iterator bulletIt = bullets_.begin();
@@ -233,6 +241,7 @@ namespace Model {
 		}
     }
 
+
     void SpaceInvadersModel::checkForDestroyedShields() {
 		std::vector<Shield*>::iterator shieldIt = shields_.begin();
 		while (shieldIt != shields_.end()) {
@@ -245,6 +254,7 @@ namespace Model {
 				shieldIt++;
 		}
     }
+
 
     void SpaceInvadersModel::checkForDestroyedPlayer() {
 		if (player_ && player_->getHP() == 0) {
@@ -265,7 +275,7 @@ namespace Model {
     	//BonusAlien destroyed or out of playfield bounds
 		if (bonus_ && ((bonus_->getHP() == 0) || bonus_->checkOutOfBounds(xSize_, ySize_))) {
 			if (bonus_->getHP() == 0)
-				score_ += bonus_->getScore();  //Add score only if destroyed
+				score_ += bonus_->getScore();  //Add score only if shot down
 			delete bonus_;
 			bonus_ = nullptr;
 			//Reset move and spawn counters
@@ -289,6 +299,7 @@ namespace Model {
 		checkForDestroyedPlayer();
 		checkForDestroyedBonusAlien();
 	}
+
 
 	void SpaceInvadersModel::levelOver(bool won) {
 		//Check if levelOver was already set
@@ -359,7 +370,7 @@ namespace Model {
 		playerShoot_ = shoot;
 	}
 
-	bool SpaceInvadersModel::areAliensAlive() {
+	bool SpaceInvadersModel::areAliensAlive() const {
 		for (auto i : aliens_)
 			if (i)  //Any RegularAlien alive -> true
 				return true;
@@ -389,7 +400,7 @@ namespace Model {
 		if (player_) {
 			//Perform movements after checking whether there's room for them
 			if (playerMoveLeft_)
-				if (player_->getXPosition() - playerMoveDistance_ > 0)
+				if (player_->getXPosition() - playerMoveDistance_ > 0)  //Can player still move left?
 					player_->move(L, playerMoveDistance_);
 			if (playerMoveRight_)
 				if (player_->getXPosition() + player_->getXSize() + playerMoveDistance_ < xSize_)
@@ -497,6 +508,7 @@ namespace Model {
 		winner_ = false; //This needs to be reset after notifying
 	}
 
+
 	std::vector<Observer*>::iterator SpaceInvadersModel::findObserver(Observer* obs) {
 		std::vector<Observer*>::iterator it = observers_.begin();
 		while (it != observers_.end()) {
@@ -533,6 +545,4 @@ namespace Model {
 		for (auto i : observers_)
 			i->notify(levelOver_, winner_);
 	}
-
 }
-

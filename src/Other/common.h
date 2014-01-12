@@ -2,7 +2,7 @@
  * common.h
  *
  *  Created on: Dec 2, 2013
- *      Author: jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef COMMON_H_

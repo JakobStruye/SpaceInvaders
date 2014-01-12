@@ -2,7 +2,7 @@
  * mobileEntity.h
  *
  *  Created on: Dec 2, 2013
- *      Author: jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef MOBILEENTITY_H_

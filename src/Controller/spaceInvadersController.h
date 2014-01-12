@@ -1,7 +1,7 @@
 /* SpaceInvadersView.h
  *
  *  Created on: 7-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef SPACEINVADERSCONTROLLER_H_
@@ -28,12 +28,14 @@ namespace Controller {
          */
         SpaceInvadersController();
 
+
         /**
          * @brief Performs one step of the game
          *
          * @return True if game is still running
          */
         bool step();
+
 
         /**
          * @brief Performs one step of the game while game is over
@@ -42,6 +44,7 @@ namespace Controller {
          */
         bool stepGameOver();
 
+
         /**
          * @brief Performs one step of the game while game is paused
          *
@@ -49,15 +52,18 @@ namespace Controller {
          */
         bool stepPaused();
 
+
         /**
          * @brief Generates a new Model when game is about to restart
          */
         void resetModel();
 
+
         /**
          * @brief Play the game
          */
         void play();
+
 
         /**
          * @brief Handles notifications sent by observee (the Model)
@@ -66,6 +72,8 @@ namespace Controller {
          * @param winner True if player just won a level
          */
         void notify(bool gameOver, bool winner);
+
+
     private:
 
         sf::Clock clock_; //Takes care of frame time

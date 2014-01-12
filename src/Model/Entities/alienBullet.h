@@ -2,7 +2,7 @@
  * alienBullet.h
  *
  *  Created on: Dec 2, 2013
- *      Author: jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef ALIENBULLET_H_
@@ -30,8 +30,6 @@ namespace Model {
 
         /**
          * @brief Checks if AlienBullet collides with another
-         *
-         * Note that intersecting Entities do not necessarily collide
          *
          * @param that The other Entity
          *

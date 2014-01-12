@@ -2,7 +2,7 @@
  * spaceInvaders.h
  *
  *  Created on: 4-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef SPACEINVADERSMODEL_H_
@@ -34,10 +34,12 @@ namespace Model {
 	     */
 		SpaceInvadersModel(int xSize, int ySize);
 
+
 		/**
 		 * @brief Generates a fresh playfield for when a next level is started
 		 */
 		void generatePlayfield();
+
 
 		/**
 		 * @brief gets vector containing pointers to all RegularAliens
@@ -46,12 +48,14 @@ namespace Model {
 		 */
 		std::vector<RegularAlien*>& getRegularAliens();
 
+
         /**
          * @brief gets vector containing pointers to all Shields
          *
          * @return vector of all Shield pointers
          */
         std::vector<Shield*>& getShields();
+
 
         /**
          * @brief gets vector containing pointers to all Bullets
@@ -60,6 +64,7 @@ namespace Model {
          */
         std::vector<Bullet*>& getBullets();
 
+
         /**
          * @brief gets pointer to PlayerShip
          *
@@ -67,12 +72,14 @@ namespace Model {
          */
         PlayerShip* getPlayer();
 
+
         /**
          * @brief gets pointer to BonusAlien
          *
          * @return pointer to BonusAlien
          */
         BonusAlien* getBonus();
+
 
         /**
          * @brief Moves all of the RegularAliens
@@ -88,15 +95,18 @@ namespace Model {
          */
         void randomAlienShoot();
 
+
         /**
          * @brief makes the PlayerShip shoot one PlayerBullet
          */
         void playerShoot();
 
+
         /**
          * @brief Checks if any Entities collided with each other
          */
         void handleAllCollisions();
+
 
         /**
          * @brief Tears down the current playfield and sets up a new one if necessary
@@ -105,12 +115,14 @@ namespace Model {
          */
         void levelOver(bool won);
 
+
         /**
          * @brief Gets the current score
          *
          * @return The current score
          */
         int getScore() const;
+
 
         /**
          * @brief Gets the current remaining extra lives
@@ -119,12 +131,14 @@ namespace Model {
          */
         int getLives() const;
 
+
         /**
          * @brief Gets the current level
          *
          * @return The current level
          */
         int getLevel() const;
+
 
         /**
          * @brief Gets how many frames it takes for Aliens to move once
@@ -133,6 +147,7 @@ namespace Model {
          */
         int getFramesPerAlienMove() const;
 
+
         /**
          * @brief Determines (one of) the RegularAlien(s) that is in the leftmost column
          *
@@ -140,12 +155,14 @@ namespace Model {
          */
         RegularAlien* getLeftmostRegularAlien() const;
 
+
         /**
          * @brief Determines (one of) the RegularAlien(s) that is in the rightmost column
          *
          * @return Pointer to rightmost RegularAlien
          */
         RegularAlien* getRightmostRegularAlien() const;
+
 
         /**
          * @brief Sets what the PlayerShip should to in the next step
@@ -156,32 +173,38 @@ namespace Model {
          */
         void setPlayerMovements(bool moveLeft, bool moveRight, bool shoot);
 
+
         /**
          * @brief Checks whether there are any living RegularAliens left
          *
          * @return True if any RegularAlien alive
          */
-        bool areAliensAlive();
+        bool areAliensAlive() const;
+
 
         /**
          * @brief Handles all PlayerShip-specific actions in one step of the game
          */
         void stepPlayer();
 
+
         /**
          * @brief Handles all RegularAlien-specific actions in one step of the game
          */
         void stepRegularAliens();
+
 
         /**
          * @brief Handles of all BonusAlien actions (generating, destroying, moving)
          */
         void stepBonusAlien();
 
+
         /**
          * @brief Performs one step of the ongoing game
          */
         void step();
+
 
         /**
          * @brief Searches for given Observer in vector of Observers
@@ -192,12 +215,14 @@ namespace Model {
          */
         std::vector<Observer*>::iterator findObserver(Observer* obs);
 
+
         /**
          * @brief Add an observer to the vector of observers
          *
          * @return True if added, otherwise false
          */
         bool registerObserver(Observer* obs);
+
 
         /**
          * @Removes an observer from the vector of observers
@@ -206,12 +231,11 @@ namespace Model {
          */
         bool unregisterObserver(Observer* obs);
 
+
         /**
          * @brief Notifies all observers if something changed
          */
         void notifyObservers();
-
-
 
 
 	private:

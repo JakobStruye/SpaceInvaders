@@ -2,7 +2,7 @@
  * entityFactory.h
  *
  *  Created on: 17-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef ENTITYFACTORY_H_
@@ -26,6 +26,7 @@ namespace Factory {
 		 * @return Pointer to the generated Entity
 		 */
 		virtual Model::Entity* getEntity(int xLoc, int yLoc, int relativeSize) = 0;
+
 
 		/**
 		 * @brief Destructor

@@ -2,7 +2,7 @@
  * bonusAlien.h
  *
  *  Created on: 13-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef BONUSALIEN_H_

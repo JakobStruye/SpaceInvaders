@@ -2,7 +2,7 @@
  * entity.cpp
  *
  *  Created on: Dec 15, 2013
- *      Author: jakob
+ *      Author: Jakob Struye
  */
 
 #include "entity.h"
@@ -23,7 +23,6 @@ namespace Model {
 
 
     int Entity::getHP() const { return HP_; }
-
 
 
     void Entity::decrementHP() { HP_--; }
@@ -78,6 +77,4 @@ namespace Model {
         }
         return collides;
     }
-
-
 }

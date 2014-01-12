@@ -2,7 +2,7 @@
  * spaceInvadersController.cpp
  *
  *  Created on: 13-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #include "spaceInvadersController.h"
@@ -44,6 +44,7 @@ namespace Controller {
 
         //Note that the Model will notify the View of this step
 
+        //Uncomment the following two lines and the very first line of the function to see how much tim eof each frame is used for calculations
         //double timeEnd = clock_.getElapsedTime().asSeconds();
         //std::cout << 100 * (1.0 - ((timeEnd - timeStart) / SPF_)) << "% of frame time unused." << std::endl;
 
@@ -54,8 +55,8 @@ namespace Controller {
 
         //Check if View is still open
         return SIView_.isViewOpen();
-
     }
+
 
     bool SpaceInvadersController::stepGameOver() {
     	//Escape ends the game
@@ -71,11 +72,13 @@ namespace Controller {
         return SIView_.isViewOpen();
     }
 
+
     bool SpaceInvadersController::stepPaused() {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))   //return unpauses game
             paused_ = false;
         return SIView_.drawPaused();
     }
+
 
     void SpaceInvadersController::resetModel() {
         delete SIModel_;
@@ -87,10 +90,12 @@ namespace Controller {
         gameOver_ = false;
     }
 
+
     void SpaceInvadersController::play() {
     	//Perform steps until one returns false
     	while (step());
     }
+
 
     void SpaceInvadersController::notify(bool gameOver, bool winner) {
         if (gameOver && !winner) {
@@ -99,5 +104,4 @@ namespace Controller {
         //Other notifications have no effect on the Controller
         return;
     }
-
 }

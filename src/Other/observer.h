@@ -2,7 +2,7 @@
  * observer.h
  *
  *  Created on: 13-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef OBSERVER_H_

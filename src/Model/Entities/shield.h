@@ -2,7 +2,7 @@
  * Shield.h
  *
  *  Created on: Dec 2, 2013
- *      Author: jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef SHIELD_H_
@@ -10,14 +10,14 @@
 
 
 
-#include "staticEntity.h"
+#include "entity.h"
 
 namespace Model {
 
     /**
      * Class representing a shield
      */
-    class Shield : public StaticEntity {
+    class Shield : public Entity {
     public:
         /**
          * @brief Constructor
@@ -28,7 +28,7 @@ namespace Model {
          * @param maxHP Starting HP
          */
         Shield(int xLoc, int yLoc, int relativeSize) :
-        	StaticEntity(xLoc, yLoc, relativeSize, 0.75 * relativeSize, 5) {}
+        	Entity(xLoc, yLoc, relativeSize, 0.75 * relativeSize, 5) {}
     };
 
 }

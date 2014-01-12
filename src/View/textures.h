@@ -2,7 +2,7 @@
  * textures.h
  *
  *  Created on: 7-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #ifndef TEXTURES_H_

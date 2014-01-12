@@ -2,7 +2,7 @@
  * SpaceInvadersView.cpp
  *
  *  Created on: 7-dec.-2013
- *      Author: Jakob
+ *      Author: Jakob Struye
  */
 
 #include "spaceInvadersView.h"
@@ -17,19 +17,19 @@ namespace View {
     SpaceInvadersSFML::SpaceInvadersSFML(int xReso, int yReso, Model::SpaceInvadersModel* SI) : xReso_(xReso), yReso_(yReso),
             window_(sf::VideoMode(xReso, yReso + HUDoffset_), "Space Invaders"),SI_(SI), altTextures_(false),
             framesPerAlienMove_(SI->getFramesPerAlienMove()), alienMoveCounter_(0), gameOver_(false) {
-    	try {
+    	try {              //Attempt to set all the Textures and the Font
     		setTextures();
     		allTexturesFound_ = true;
     	}
-    	catch(std::runtime_error& e) {
+    	catch(std::runtime_error& e) {    //Handle errors thrown while setting Textures and Font
     		std::string error(e.what());
-    		if (error == "Texture not found")
+    		if (error == "Texture not found")   //Some Texture(s) not found -> use squares instead
     			allTexturesFound_ = false;
     		if (error == "Font not found") {
     			std::string dataDirString = DATADIR;
     			std::cout << "arial.ttf not found in " << dataDirString << std::endl;
     			std::cout << "No text will be printed" << std::endl;
-    			allTexturesFound_ = true;
+    			allTexturesFound_ = true;   //All Textures found if code gets to here
     		}
     	}
     }
@@ -91,12 +91,16 @@ namespace View {
 		if (player) {
 			sf::Vector2u playerTexSize = tex_.playerTex_.getSize();
 			//Make sure the Sprite is scaled to have the same size as the Entity
+			//Achieve this by setting the Texture scale to (horizontal Entity size)/(horizontal Texture size)
+			//Note that Texture and Entity are supposed to have the width/height relation!
 			float scalePlayerTex = ((double) player->getXSize() / playerTexSize.x);
 			sprites_.push_back(sf::Sprite());
+			//Give the Sprite a Texture
 			sprites_.back().setTexture(tex_.playerTex_);
+			//Set scale (calculated previously) and position (extracted from Model)
 			sprites_.back().setScale(scalePlayerTex, scalePlayerTex);
 			sprites_.back().setPosition(player->getXPosition(), player->getYPosition());
-			if (!allTexturesFound_)
+			if (!allTexturesFound_)    //Only used if some Textures are missing
 				generateShape(player);
 		}
 
@@ -113,6 +117,7 @@ namespace View {
 		//All RegularAlien Textures should have the same size
 		//so scale should be the same for all of them
 		sf::Vector2u alienTexSize = tex_.alienBotTex_.getSize();
+		//Temporarily set scale to 0, calculate when needed
 		float scaleAlien = 0;
 		bool scalesSet = false;
 		//Note that destroyed RegularAliens are not completely erased,
@@ -132,31 +137,26 @@ namespace View {
 						//Check which type of RegularAlien it is, pick Texture accordingly
 						if (dynamic_cast<Model::RegularAlienTop*>(i)) {
 							sprites_.back().setTexture(tex_.alienTopTex_);
-							sprites_.back().scale(scaleAlien, scaleAlien);
 						}
 						else if (dynamic_cast<Model::RegularAlienMid*>(i)) {
 							sprites_.back().setTexture(tex_.alienMidTex_);
-							sprites_.back().scale(scaleAlien, scaleAlien);
 						}
 						else if (dynamic_cast<Model::RegularAlienBot*>(i)) {
 							sprites_.back().setTexture(tex_.alienBotTex_);
-							sprites_.back().scale(scaleAlien, scaleAlien);
 						}
 					}
 					else {
 						if (dynamic_cast<Model::RegularAlienTop*>(i)) {
 							sprites_.back().setTexture(tex_.alienTopAltTex_);
-							sprites_.back().scale(scaleAlien, scaleAlien);
 						}
 						else if (dynamic_cast<Model::RegularAlienMid*>(i)) {
 							sprites_.back().setTexture(tex_.alienMidAltTex_);
-							sprites_.back().scale(scaleAlien, scaleAlien);
 						}
 						else if (dynamic_cast<Model::RegularAlienBot*>(i)) {
 							sprites_.back().setTexture(tex_.alienBotAltTex_);
-							sprites_.back().scale(scaleAlien, scaleAlien);
 						}
 					}
+					sprites_.back().scale(scaleAlien, scaleAlien);
 					sprites_.back().setPosition(i->getXPosition(), i->getYPosition());
 				}
 				else   //Use shapes if not all Textures available
@@ -167,6 +167,9 @@ namespace View {
 
 
 	void SpaceInvadersSFML::setShields() {
+		//Check if any shields left
+		if (SI_->getShields().size() == 0)
+			return;
 		sf::Vector2u shieldTexSize = tex_.shieldTex_.getSize();
 		//Destroyed shields are erased from vector,
 		//so getShields should only return valid pointers.
@@ -206,6 +209,7 @@ namespace View {
 		sf::Vector2u bulletTexSize = tex_.bulletTex_.getSize();
 		//Set scales to impossible value -1
 		//This way it's easy to check if they have been set properly
+		//Player and Alien bullets have different sizes but are based on the same source Texture -> use different scales!
 		float scalePlayerBulletTex = -1;
 		float scaleAlienBulletTex = -1;
 		for (auto i : SI_->getBullets()) {
@@ -233,6 +237,7 @@ namespace View {
 
 	void SpaceInvadersSFML::setBonus() {
 		Model::BonusAlien* bonus = SI_->getBonus();
+		//Check if nullptr
 		if (bonus) {
 			if (allTexturesFound_) {
 				sf::Vector2u bonusTexSize = tex_.bonusTex_.getSize();
@@ -248,6 +253,7 @@ namespace View {
 	}
 
 	void SpaceInvadersSFML::generateShape(Model::Entity* entity) {
+		//If Textures missing, use Rectangles set to correct shape and position
 		shapes_.push_back(sf::RectangleShape(
 				sf::Vector2f(entity->getXSize(), entity->getYSize())));
 		shapes_.back().move(entity->getXPosition(), entity->getYPosition());
@@ -280,17 +286,18 @@ namespace View {
         text.setPosition(300, 15);
         window_.draw(text);
         int lifePos = 360;
+		//Draw Sprites with current lives
         for (int i = 0; i < SI_->getLives(); i++) {
         	if (allTexturesFound_) {
     			sf::Sprite lifeSprite;
 				lifeSprite.setTexture(tex_.playerTex_);
 				double scaleLife = 30.0 / (double) tex_.playerTex_.getSize().x;
-				//std::cout << scaleLife << std::endl;
 				lifeSprite.setScale(scaleLife, scaleLife);
 				lifeSprite.setPosition(lifePos, 18);
 				window_.draw(lifeSprite);
         	}
         	else {
+				//Use rectangles if Textures missing
     			sf::RectangleShape lifeShape;
         		lifeShape = sf::RectangleShape(sf::Vector2f(30, 15));
         		lifeShape.move(lifePos, 18);
@@ -302,16 +309,16 @@ namespace View {
 	}
 
 	bool SpaceInvadersSFML::draw() {
+		
+		//Different draw function for game over
+        if (gameOver_)
+        	return drawGameOver();
 
 		//Get rid of all Sprites from previous frame
 		sprites_.clear();
 		shapes_.clear();
-		//Set all new Sprites
-		setPlayer();
-		setAliens();
-		setShields();
-		setBullets();
-		setBonus();
+
+		//SFML-specific stuff
         sf::Event event;
         while (window_.pollEvent(event))
         {
@@ -321,8 +328,12 @@ namespace View {
 
         window_.clear();
 
-        if (gameOver_)
-        	return drawGameOver();
+		//Set all new Sprites
+		setPlayer();
+		setAliens();
+		setShields();
+		setBullets();
+		setBonus();
 
         //Draw all Sprites of Entities
 		if (allTexturesFound_) {    //Use sprites if all Textures were found
@@ -434,13 +445,14 @@ namespace View {
 		alienMoveCounter_ = 0;
 	}
 
-	bool SpaceInvadersSFML::isViewOpen() {
+	bool SpaceInvadersSFML::isViewOpen() const{
 		return window_.isOpen();
 	}
+
+
 	void SpaceInvadersSFML::closeWindow() {
 		window_.close();
 	}
-
 
 
 	void SpaceInvadersSFML::notify(bool gameOver, bool winner) {
@@ -454,7 +466,4 @@ namespace View {
 			//doesn't happen on going to next level in Model either
 		draw();
 	}
-
-
-
 }
