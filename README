@@ -16,6 +16,8 @@ $ cd build
 $ cmake ..
 $ make
 
+The executable is named SpaceInvaders
+
 Note that the project requires the SFML library to build! (v2.x)
 
 
